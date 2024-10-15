@@ -11,9 +11,9 @@ pl2 = Player.new("Bot_GPT")
 
 def inscription
   puts "Hey!! Toi la!! vient t'inscrire!!"
-  puts ">"
+  print ">"
   inscription_human = gets.chomp
-  human_player = HumanPlayer.new{inscription_human}
+  human_player = HumanPlayer.new(inscription_human)
   puts "Hey!! Salut #{human_player.name}!!"
   puts ""
   puts  "------------------------------------------------"
@@ -22,9 +22,10 @@ def inscription
   puts  "-------------------------------------------------"
   puts ""
   puts  "tu va te battre contre Bot_José et Bot_GPT !!"
+  return human_player
 end
 
-def menus
+def menus(pl1, pl2)
     puts "============= Le Menu =============== "
     puts "| a - chercher une meilleure arme   |"
     puts "| s - chercher à se soigner         |"
@@ -35,7 +36,7 @@ def menus
     puts "====================================="
   end
 
-  def choix_user_menus
+  def choix_user_menus(human_player, pl1, pl2)
     puts "Quelle action veux-tu effectuer ?"
     human_player_select = gets.chomp
     if  human_player_select == "a"
@@ -48,6 +49,7 @@ def menus
       human_player.attacks(pl1)
     else 
       puts "tu t'est trompé, prend ca dans ta geule!!"
+    end
   end
 
   
@@ -66,7 +68,7 @@ def menus
 #   ...
 #   end  
 
-def end_game
+def end_game(human_player)
   if human_player.life_points > 0 
     puts "La partie est finie"
     puts "#{human_player} BRAVO ! TU AS GAGNE !"
@@ -76,11 +78,14 @@ def end_game
   end
 end
 
-inscription
-while human_player > 0 && (pl1.life_points > 0 or pl2.life_points > 0)
-  menu 
-  choix_user_menus
-  pl2.attacks(human_player)
-  pl1.attacks(human_player)
+human_player = inscription
+while human_player.life_points > 0 && (pl1.life_points > 0 or pl2.life_points > 0)
+  human_player.show_state
+  pl1.show_state
+  pl2.show_state
+  menus(pl1, pl2) 
+  choix_user_menus(human_player, pl1, pl2)
+  pl2.attacks(human_player) if pl2.life_points>0
+  pl1.attacks(human_player) if pl1.life_points>0
 end
-end_game
+end_game(human_player)

@@ -58,15 +58,16 @@ class HumanPlayer < Player
 
   def search_weapon
     puts "#{@name} fait un lancer de dée!!"
-    rand(1..6)
+    lancer_dee = rand(1..6)
     puts"================================"
-    puts"TADADINDIN!! WHAOU!! ta trouver une arme niveaux #{rand}!!"
+    puts"TADADINDIN!! WHAOU!! ta trouver une arme niveaux #{lancer_dee}!!"
     puts"================================"
     
-    if rand > @weapon_level
-      puts "Elle est de niveaux #{rand}!! ca fait #{rand - @weapon_level} de plus!! Cool, utilise la!"
+    if lancer_dee > @weapon_level
+      puts "Elle est de niveaux #{lancer_dee}!! ca fait #{lancer_dee - @weapon_level} de plus!! Cool, utilise la!"
+      @weapon_level = lancer_dee
     end
-    if rand <= @weapon_level
+    if lancer_dee <= @weapon_level
       puts"M@*#$... elle n'est pas mieux que ton arme actuelle..."
       puts "#{name} jette l'arme.."
     end
@@ -74,26 +75,26 @@ class HumanPlayer < Player
 
   def search_health_pack
     puts "#{@name} fait un lancer de dée!!"
-    rand(1..6)
+    lancer_dee = rand(1..6)
     puts"================================"
     puts"TA-DA-DIN-DIN!"
     puts"================================"
-    if rand == 1
+    if lancer_dee == 1
       puts"POUIN-POUIN-POUINN..."
     puts"================================"
       puts "Raaaahh!! même pas un mercurochrome...."
-    elsif rand >= 2 || rand <= 5
+    elsif lancer_dee >= 2 || lancer_dee <= 5
       puts"TA-DIN-DIN-DIN!!!"
     puts"================================"
       puts "Hooo un petit rhum!!"
       puts "#{@name} gagne +50 pts de vie"
-      @life_points + 50
-    else rand > 5
+      @life_points += 50
+    else lancer_dee > 5
       puts"TA-DIN-DIN-DIN!!!"
     puts"================================"
       puts "Hooo des chocapiques !!"
       puts "#{@name} gagne +80 pts de vie felicitation!!!"
-      @life_points + 80
+      @life_points += 80
     end
 
   end
